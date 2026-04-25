@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title th:text="${portfolio.name} + ' — ' + ${portfolio.title}">Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" th:text="'PD.dev'">PD.dev</div>
+  <div class="nav-links">
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#certs">Certs</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Available for opportunities</div>
+    <h1 class="hero-name">
+      <span class="line1" th:text="${#strings.substringBefore(portfolio.name, ' ')}">Pooja</span>
+      <span class="line2" th:text="${#strings.substringAfter(portfolio.name, ' ')}">Dixit</span>
+    </h1>
+    <p class="hero-desc" th:text="${portfolio.tagline}">Java Spring Boot Developer</p>
+    <div class="hero-certs">
+      <div class="cert-badge"><span class="dot"></span>GCP ACE Certified</div>
+      <div class="cert-badge"><span class="dot"></span>AWS Developer Certified</div>
+      <div class="cert-badge"><span class="dot"></span>Spring Security · JWT · OAuth 2.0</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Get In Touch</a>
+      <a href="#projects" class="btn-secondary">View Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num" th:text="${portfolio.yearsExperience}">2+</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" th:text="${portfolio.microservicesBuilt}">5+</div>
+    <div class="stat-label">Microservices Built</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" th:text="${portfolio.apiSpeedGain}">30%</div>
+    <div class="stat-label">API Speed Gained</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num" th:text="${portfolio.testCoverage}">90%+</div>
+    <div class="stat-label">Test Coverage</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card reveal" th:each="skill : ${portfolio.skills}">
+      <div class="skill-cat" th:text="${skill.category}">Category</div>
+      <div class="skill-items">
+        <span class="skill-tag" th:each="item : ${skill.items}" th:text="${item}">Skill</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-timeline">
+    <div class="exp-item reveal">
+      <div class="exp-dot"></div>
+      <div class="exp-meta">
+        <span class="exp-role">Java Developer</span>
+        <span class="exp-company">Tata Consultancy Services</span>
+        <span class="exp-date">Nov 2023 – Present</span>
+      </div>
+      <div class="exp-loc">Gandhinagar, Gujarat · Full-Time · Agile/Scrum</div>
+      <ul class="exp-bullets">
+        <li>Designed and deployed <strong>5+ production microservices</strong> using Spring Boot, handling enterprise-scale transactional workloads with independent scaling via Docker & Kubernetes.</li>
+        <li>Architected API security layer using <strong>Spring Security, JWT token validation, and OAuth 2.0 flows</strong> — maintained zero unauthorized access incidents across all services.</li>
+        <li>Reduced average API response time by <strong>30%</strong> through N+1 query elimination, PostgreSQL indexing strategies, and Redis-based response caching.</li>
+        <li>Achieved <strong>90%+ test coverage</strong> across all services using JUnit 5 & Mockito; TDD approach reduced production bug rate by ~40%.</li>
+        <li>Built and maintained <strong>Jenkins CI/CD pipelines</strong> with Git branching strategies enabling zero-downtime deployments to GCP/AWS environments.</li>
+        <li>Delivered <strong>15+ features across 6 Agile sprints</strong> with on-time completion, writing technical specs and conducting peer code reviews.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal" th:each="project : ${portfolio.projects}">
+      <div class="project-num" th:text="${project.number}">01</div>
+      <h3 class="project-title" th:text="${project.title}">Project Title</h3>
+      <p class="project-desc" th:text="${project.description}">Description</p>
+      <div class="project-stack">
+        <span class="stack-tag" th:each="tech : ${project.techStack}" th:text="${tech}">Tech</span>
+      </div>
+      <a th:href="${project.githubUrl}" target="_blank" class="project-github">
+        View on GitHub →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-grid">
+    <div class="cert-card reveal" th:each="cert : ${portfolio.certifications}">
+      <div class="cert-icon" th:text="${cert.icon}">☁️</div>
+      <div class="cert-name" th:text="${cert.name}">Cert Name</div>
+      <div class="cert-issuer" th:text="${cert.issuer}">Issuer</div>
+      <div class="cert-verified">
+        <span class="verified-dot"></span>
+        <span th:text="${cert.credentialId}">Verified</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-inner">
+    <div>
+      <h2 class="contact-headline">Let's build something <span>great</span> together.</h2>
+      <p class="contact-sub">Open to Java Developer roles at product companies, MNCs, and fintech firms. Based in Gandhinagar — open for relocation.</p>
+    </div>
+    <div class="contact-links">
+      <a th:href="'mailto:' + ${portfolio.email}" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Email</div>
+          <div class="contact-link-value" th:text="${portfolio.email}">email</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a th:href="'tel:' + ${portfolio.phone}" class="contact-link">
+        <span class="contact-link-icon">☎</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Phone</div>
+          <div class="contact-link-value" th:text="${portfolio.phone}">phone</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a th:href="${portfolio.linkedinUrl}" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-value">linkedin.com/in/pooja-dixit</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+      <a th:href="${portfolio.githubUrl}" target="_blank" class="contact-link">
+        <span class="contact-link-icon">⌥</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-value">github.com/pooja-dixit</div>
+        </div>
+        <span class="contact-link-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="mono-sm" th:text="'© 2025 ' + ${portfolio.name}">© 2025 Pooja Dixit</span>
+  <span class="mono-sm">Java · Spring Boot · Cloud · Microservices</span>
+</footer>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
